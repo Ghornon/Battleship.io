@@ -1,0 +1,151 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-size: 20px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.navbar {
+	width: 100%;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	outline: 1px solid black;
+}
+
+.header {
+	width: 50%;
+	height: 50px;
+	margin: 0 30px;
+	padding: 0;
+}
+
+.header .logo {
+	font-size: 2em;
+	text-transform: uppercase;
+	font-style: normal;
+	color: #999;
+}
+
+.nav {
+	width: 50%;
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	align-items: center;
+}
+
+.nav--item {
+	list-style-type: none;
+	padding: 0 20px;
+}
+
+.button {
+	outline: 1px solid black;
+	padding: 5px 20px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.button--primary {
+	background-color: blue;
+	color: white;
+}
+
+.button--secondary {
+	background-color: #999;
+	color: black;
+}
+
+.controls {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#status {
+	font-size: 1.6em;
+}
+
+#info {
+	font-size: 1em;
+}
+
+.container {
+	width: 100%;
+	margin: 0;
+	padding: 20px;
+}
+
+.battlefield {
+	margin: 0 auto;
+	width: 45vmax;
+	height: 20vmax;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.grid {
+	outline: 1px solid black;
+	display: grid;
+	width: 20vmax;
+	height: 20vmax;
+	grid-template-columns: repeat(10, 1fr);
+}
+
+.grid > div {
+	outline: 1px dashed black;
+}
+
+.battlefield--flex {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	outline: 1px solid black;
+	width: 20vmax;
+	height: 20vmax;
+	margin: 20px auto;
+}
+
+.battlefield--flex-row {
+	flex-direction: column;
+}
+
+.battlefield--flex-row > .ship {
+	flex-direction: row;
+}
+
+.ship {
+	display: flex;
+	flex-direction: column;
+	margin: 1vmax;
+}
+
+.ship > div {
+	width: 2vmax;
+	height: 2vmax;
+}
+
+.carrier-container {
+	background-color: orange;
+}
+
+.battleship-container {
+	background-color: red;
+}
+
+.cruiser-container {
+	background-color: green;
+}
+
+.submarine-container {
+	background-color: blue;
+}
+
+.destroyer-container {
+	background-color: blue;
+}
