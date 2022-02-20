@@ -35,6 +35,13 @@ const createBoard = (fieldSelector, width) => {
 	return grid;
 }
 
+class Moves {
+	board = [];
+	constructor(width) {
+
+	}
+}
+
 const main = () => {
 	const selectors = {
 		playerGrid: document.querySelector('#battlefield--player'),
@@ -47,13 +54,14 @@ const main = () => {
 	};
 
 	let isHorizontal = true;
+	let currentPlayer = 'player';
 
 	//Create boards
 
 	const boardWidth = 10;
 
 	const playerGrid = createBoard(selectors.playerGrid, boardWidth);
-	createBoard(selectors.enemyGrid, boardWidth);
+	const enemyGrid = createBoard(selectors.enemyGrid, boardWidth);
 
 	//Create ships
 
@@ -71,7 +79,16 @@ const main = () => {
 		event.preventDefault();
 		isHorizontal = !isHorizontal;
 		selectors.ships.classList.toggle('battlefield--flex-row');
-	})
+	});
+
+	// Start game
+	selectors.startButton.addEventListener('click', event => {
+		event.preventDefault();
+		if (selectors.ships.childElementCount != 0)
+			return;
+
+		console.log("Start");
+	});
 
 	// Drag and drop
 
@@ -80,20 +97,13 @@ const main = () => {
 
 	shipsArray.forEach(ship => ship.createShip(selectors.ships));
 	shipsArray.forEach(ship => ship.selector.addEventListener('mousedown', event => {
-		selectedShip= event.target.id;
-		console.log(event.target.id);
+		selectedShip = event.target.id;
 	}));
 
 	shipsArray.forEach(ship => ship.selector.addEventListener('dragstart', event => {
 		draggedShip = event.target;
 	}));
 
-	playerGrid.forEach(square => square.addEventListener('dragstart', event => {
-		draggedShip = this;
-	}));
-
-	playerGrid.forEach(square => square.addEventListener('dragover', event => event.preventDefault()));
-	playerGrid.forEach(square => square.addEventListener('dragenter', event => event.preventDefault()));
 	playerGrid.forEach(square => square.addEventListener('drop', event => {
 		const shipClassName =  selectedShip.slice(0, -2);
 		const shipLength = shipsArray.find(ship => ship.name == shipClassName).length;
@@ -102,14 +112,12 @@ const main = () => {
 		const x = parseInt(event.target.dataset.x);
 		const y = parseInt(event.target.dataset.y);
 
-		console.log(x, y);
-
 		if (isHorizontal) {
 			if ((x - selectedShipIndex) < 0 || (x - selectedShipIndex + shipLength - 1) > 9)
 				return;
 
 			const squares = [];
-			
+
 			for (let i = x - selectedShipIndex; i < (x - selectedShipIndex + shipLength); i++) {
 				const square = playerGrid.find(square => square.dataset.x == i && square.dataset.y == y);
 				squares.push(square);	
@@ -142,11 +150,13 @@ const main = () => {
 			squares.forEach(square => square.classList.add('taken', `${shipClassName}-container`));
 		}
 
-		console.log(selectedShipIndex)
-
 		selectors.ships.removeChild(draggedShip);
 	}));
-	// playerGrid.forEach(square => square.addEventListener('drop', dragEnd));
+
+	playerGrid.forEach(square => square.addEventListener('dragstart', event => event.preventDefault()));
+	playerGrid.forEach(square => square.addEventListener('dragover', event => event.preventDefault()));
+	playerGrid.forEach(square => square.addEventListener('dragenter', event => event.preventDefault()));
+	playerGrid.forEach(square => square.addEventListener('drop', event => event.preventDefault()));
 }
 
 document.addEventListener("DOMContentLoaded", main);
