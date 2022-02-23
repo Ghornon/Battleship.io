@@ -1,23 +1,4 @@
-
-class Ship {
-	createShip(shipsField) {
-		const ship = document.createElement('div');
-		ship.classList.add('ship', `${this.name}-container`);
-		ship.draggable = true;
-		for (let i = 0; i < this.length; i++) {
-			const div = document.createElement('div');
-			div.id = `${this.name}-${i}`;
-			ship.appendChild(div);
-		}
-		this.selector = ship;
-		shipsField.appendChild(ship);
-	}
-
-	constructor(name, length) {
-		this.name = name;
-		this.length = length;
-	}
-}
+import Ship from './Ship';
 
 const createBoard = (fieldSelector, width) => {
 	const grid = [];
@@ -97,6 +78,14 @@ const createComputerShips = (grid, boardWidth) => {
 	}
 }
 
+const startGame = (selectors, boardWidth) => {
+	let currentPlayer = 'player';
+
+	const enemyGrid = createBoard(selectors.enemyGrid, boardWidth);
+	
+	createComputerShips(enemyGrid, boardWidth);
+};
+
 const main = () => {
 	const selectors = {
 		playerGrid: document.querySelector('#battlefield--player'),
@@ -109,16 +98,14 @@ const main = () => {
 	};
 
 	let isHorizontal = true;
-	let currentPlayer = 'player';
 
 	//Create boards
 
 	const boardWidth = 10;
 
 	const playerGrid = createBoard(selectors.playerGrid, boardWidth);
-	const enemyGrid = createBoard(selectors.enemyGrid, boardWidth);
 
-	createComputerShips(enemyGrid, boardWidth);
+	console.log('asdaa');
 
 	//Create ships
 
@@ -144,7 +131,7 @@ const main = () => {
 		if (selectors.ships.childElementCount != 0)
 			return;
 
-		console.log("Start");
+		startGame(selectors, boardWidth);
 	});
 
 	// Drag and drop
