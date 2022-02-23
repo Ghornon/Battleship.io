@@ -35,9 +35,64 @@ const createBoard = (fieldSelector, width) => {
 	return grid;
 }
 
-class Moves {
-	board = [];
-	constructor(width) {
+const createComputerShips = (grid, boardWidth) => {
+	let isDone = false;
+	const shipsArray = [];
+	let shipIndex = 0;
+
+	shipsArray.push(new Ship('carrier', 5));
+	shipsArray.push(new Ship('battleship', 4));
+	shipsArray.push(new Ship('cruiser', 3));
+	shipsArray.push(new Ship('submarine', 3));
+	shipsArray.push(new Ship('destroyer', 2));
+
+	while(!isDone) {
+		const isHorizontal = Math.floor(Math.random() * 2);
+		const x = Math.floor(Math.random() * boardWidth);
+		const y = Math.floor(Math.random() * boardWidth);
+
+		const shipLength = shipsArray[shipIndex].length;
+
+		if (isHorizontal) {
+			if (x >= 0 && (x + shipLength - 1) <= 9) {
+				const squares = [];
+
+				for (let i = x; i < (x + shipLength); i++) {
+					const square = grid.find(square => square.dataset.x == i && square.dataset.y == y);
+					squares.push(square);	
+				}
+
+				const taken = squares.find(square => square.classList.contains('taken'));
+
+				if (taken === undefined) {
+					squares.forEach(square => square.classList.add('taken', `${shipsArray[shipIndex].name}-container`));
+					shipIndex++;
+				}
+			}
+		}
+
+		if (!isHorizontal) {
+			if (y >= 0 && (y + shipLength - 1) <= 9) {
+
+				const squares = [];
+
+				for (let i = y; i < (y + shipLength); i++) {
+					const square = grid.find(square => square.dataset.x == x && square.dataset.y == i);
+					squares.push(square)
+				}
+
+				const taken = squares.find(square => square.classList.contains('taken'));
+
+				if (taken === undefined) {
+					squares.forEach(square => square.classList.add('taken', `${shipsArray[shipIndex].name}-container`));
+					shipIndex++;
+				}
+
+			}
+		}
+
+		if (shipIndex >= shipsArray.length)
+			isDone = true;
 
 	}
 }
@@ -62,6 +117,8 @@ const main = () => {
 
 	const playerGrid = createBoard(selectors.playerGrid, boardWidth);
 	const enemyGrid = createBoard(selectors.enemyGrid, boardWidth);
+
+	createComputerShips(enemyGrid, boardWidth);
 
 	//Create ships
 
