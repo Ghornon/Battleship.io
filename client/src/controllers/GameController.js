@@ -4,11 +4,17 @@ class GameController {
 		this._view = view;
 		
 		this._view.on('startButtonClicked', event => this.start(event));
+
+		this._model._shipsModel.on('shipRemoved', () => this.unlockStartButton());
 	}
 
-	unlockStartButton(shipsCount) {
-		if (shipsCount == 0)
-			this._model.unlockStartButton();
+	unlockStartButton() {
+		const shipCount = this._model._shipsModel.getShipsCount();
+
+		if (shipCount != 0)
+			return;
+
+		this._view.unlockStartButton();
 	}
 
 	start(event) {

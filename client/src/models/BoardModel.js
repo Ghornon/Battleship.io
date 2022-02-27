@@ -5,6 +5,7 @@ class BoardModel extends EventEmitter {
 		super();
 		this._board = [];
 		this._shipsModel = shipsModel;
+		this.boardWidth = width;
 
 		for (let i = 0; i < width; i++) {
 			for (let j = 0; j < width; j++) {

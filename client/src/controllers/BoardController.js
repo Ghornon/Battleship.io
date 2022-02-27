@@ -27,8 +27,6 @@ class BoardController {
 			for (let i = x - selectedShipIndex; i < (x - selectedShipIndex + shipLength); i++) {
 				const square = this._model.getBoard().find(square => square.x == i && square.y == y);
 
-				console.log(square);
-
 				if (square.isTaken)
 					return;
 
@@ -66,6 +64,74 @@ class BoardController {
 		}
 
 		this._model._shipsModel.removeShip(shipClassName);
+	}
+
+	setComputerShips() {
+		if (this._isPlayerGrid) 
+			return;
+
+		let isDone = false;
+		const shipsArray = this._model._shipsModel.getShipsArray();
+		let shipIndex = 0;
+	
+		while(!isDone) {
+			const isHorizontal = Math.floor(Math.random() * 2);
+			const x = Math.floor(Math.random() * this._model.boardWidth);
+			const y = Math.floor(Math.random() * this._model.boardWidth);
+	
+			const shipLength = shipsArray[shipIndex].length;
+	
+			if (isHorizontal) {
+				if (x >= 0 && (x + shipLength - 1) <= 9) {
+					const squares = [];
+
+					for (let i = x; i < (x + shipLength); i++) {
+						const square = this._model.getBoard().find(square => square.x == i && square.y == y);
+
+						squares.push(square);
+					}
+	
+					const taken = squares.find(square => square.isTaken == true);
+	
+					if (taken === undefined) {
+						squares.forEach(square => {
+							const classList = square.classList;
+							classList.push('taken', `${shipsArray[shipIndex].name}-container`);
+							this._model.updateBoard({ ...square, isTaken: true, classList });
+						});
+						shipIndex++;
+					}
+				}
+			}
+	
+			if (!isHorizontal) {
+				if (y >= 0 && (y + shipLength - 1) <= 9) {
+	
+					const squares = [];
+	
+					for (let i = y; i < (y + shipLength); i++) {
+						const square = this._model.getBoard().find(square => square.x == x && square.y == i);
+						squares.push(square);
+					}
+	
+					const taken = squares.find(square => square.isTaken == true);
+	
+					if (taken === undefined) {
+						squares.forEach(square => {
+							const classList = square.classList;
+							classList.push('taken', `${shipsArray[shipIndex].name}-container`);
+							this._model.updateBoard({ ...square, isTaken: true, classList });
+						});
+						shipIndex++;
+					}
+	
+				}
+			}
+	
+			if (shipIndex >= shipsArray.length)
+				isDone = true;
+	
+		}
 	}
 }
 

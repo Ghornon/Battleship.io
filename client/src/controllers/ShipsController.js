@@ -11,11 +11,6 @@ class ShipsController {
 		this._model.rotateShips();
 	}
 
-	unlockStartButton(shipsCount) {
-		if (shipsCount == 0)
-			this._model.unlockStartButton();
-	}
-
 	start(event) {
 		event.preventDefault();
 		console.log('Start game');

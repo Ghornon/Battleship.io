@@ -1,13 +1,14 @@
 import EventEmitter from "../EventEmitter";
 
 class GameModel extends EventEmitter {
-	constructor(width = 10, player = 'player') {
+	constructor(width = 10, shipsModel, player = 'player') {
 		super();
 		this._width = width;
 		this._infoText = "";
 		this._statusText = "";
 		this._player = player;
 		this._startButtonDisabled = true;
+		this._shipsModel = shipsModel;
 	}
 
 	getWidth() {

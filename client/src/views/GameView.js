@@ -22,6 +22,7 @@ class GameView extends EventEmitter {
 	}
 
 	unlockStartButton() {
+		this._elements.startButton.classList.remove('button--disabled');
 		this._elements.startButton.disabled = this._model.startButton;
 	}
 }

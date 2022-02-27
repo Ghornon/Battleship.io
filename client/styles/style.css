@@ -58,8 +58,12 @@ body {
 }
 
 .button--secondary {
-	background-color: #999;
+	background-color: lightskyblue;
 	color: black;
+}
+
+.button--disabled {
+	background-color: #999;
 }
 
 .controls {
