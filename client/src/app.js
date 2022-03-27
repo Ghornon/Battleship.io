@@ -29,7 +29,8 @@ const main = () => {
 
 	const computerBoardModel = new BoardModel(10, shipsModel);
     const computerBoardView = new BoardView(computerBoardModel, {
-		querySelector: document.querySelector('#battlefield--enemy')
+		querySelector: document.querySelector('#battlefield--enemy'),
+		hideClassList: true
 	});
     const computerBoardController = new BoardController(computerBoardModel, computerBoardView, false);
 	computerBoardController.setComputerShips();
@@ -42,6 +43,7 @@ const main = () => {
 	});
     const playerBoardController = new BoardController(playerBoardModel, playerBoardView);
 
+	
 	
 }
 

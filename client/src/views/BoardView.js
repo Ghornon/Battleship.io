@@ -1,11 +1,12 @@
 import EventEmitter from "../EventEmitter";
 
 class BoardView extends EventEmitter {
-	constructor(model, { querySelector }) {
+	constructor(model, { querySelector, hideClassList = false }) {
 		super();
 		this._model = model;
 		this._querySelector = querySelector;
 		this.rebuildBoard();
+		this._hideClassList = hideClassList;
 
 		// attach model listeners
 		this._model.on('boardUpdated', () => this.rebuildBoard());
@@ -28,8 +29,13 @@ class BoardView extends EventEmitter {
 			square.dataset.x= x;
 			square.dataset.y= y;
 
+			const filteredClassList = classList.filter(className => className == 'miss' || className == 'hit');
+			
 			if (classList.length)
-				square.classList.add(...classList);
+				if (this._hideClassList)
+					square.classList.add(...filteredClassList);
+				else
+					square.classList.add(...classList);
 
 			// attach listener
 			this.addEventListeners(square);
