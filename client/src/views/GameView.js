@@ -14,11 +14,11 @@ class GameView extends EventEmitter {
 	}
 
 	updateInfo() {
-		this._elements.info.innerText = this._model.infoText;
+		this._elements.info.innerText = this._model.getInfoText();
 	}
 
 	updateStats() {
-		this._elements.status.innerText = this._model.statusText;
+		this._elements.status.innerText = this._model.getStatusText();
 	}
 
 	unlockStartButton() {

@@ -48,8 +48,10 @@ body {
 .button {
 	outline: 1px solid white;
 	padding: 5px 20px;
+	margin-bottom: 5px;
 	text-transform: uppercase;
 	text-decoration: none;
+	min-width: 200px;
 }
 
 .button--primary {
@@ -69,16 +71,19 @@ body {
 .controls {
 	width: 100%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
 #status {
 	font-size: 1.6em;
+	color: #fff;
 }
 
 #info {
 	font-size: 1em;
+	color: #fff;
 }
 
 .container {

@@ -20,6 +20,8 @@ class GameController {
 	start(event) {
 		event.preventDefault();
 		console.log('Start game');
+		this._model.setStatusText("Start game");
+		this._model.setInfoText("Your turn!");
 	}
 }
 
