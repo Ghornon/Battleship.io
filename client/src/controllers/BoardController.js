@@ -6,6 +6,9 @@ class BoardController {
 
 		if (this._isPlayerGrid)
 			this._view.on('droppedOnBoard', event => this.droppedOnBoard(event));
+
+		if (!this._isPlayerGrid)
+			this._view.on('clickedOnSquare', event => this.clickedOnSquare(event));
 	}
   
 	droppedOnBoard(event) {
@@ -132,6 +135,29 @@ class BoardController {
 				isDone = true;
 	
 		}
+	}
+
+	clickedOnSquare(event) {
+		const isShooted = event.target.dataset.isShooted;
+
+		if (!isShooted)
+			return;
+
+		const x = parseInt(event.target.dataset.x);
+		const y = parseInt(event.target.dataset.y);
+
+		const square = this._model.getBoard().find(square => square.x == x && square.y == y);
+
+		const classList = square.classList;
+
+		if (square.isTaken)
+			classList.push('hit');
+		else
+			classList.push('miss');
+
+		console.log(square.isTaken);
+
+		this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: true })
 	}
 }
 

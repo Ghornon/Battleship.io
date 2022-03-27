@@ -163,3 +163,37 @@ body {
 .destroyer-container {
 	background-color: yellow;
 }
+
+.miss {
+	position: relative;
+}
+
+.miss::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 60%;
+	height: 60%;
+	background: #fff;
+	border-radius: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	border: 1px solid white;
+}
+
+.hit {
+	position: relative;
+}
+
+.hit::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 60%;
+	height: 60%;
+	background: red;
+	border-radius: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	border: 1px solid white;
+}

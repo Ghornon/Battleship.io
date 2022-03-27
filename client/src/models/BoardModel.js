@@ -9,7 +9,7 @@ class BoardModel extends EventEmitter {
 
 		for (let i = 0; i < width; i++) {
 			for (let j = 0; j < width; j++) {
-				this._board.push({x: j, y: i, isTaken: false, classList: []});
+				this._board.push({x: j, y: i, isTaken: false, classList: [], isShooted: false});
 			}
 		}
 	}
@@ -18,10 +18,10 @@ class BoardModel extends EventEmitter {
 		return this._board;
 	}
 
-	updateBoard({x, y, isTaken, classList}) {
+	updateBoard({x, y, isTaken, classList, isShooted}) {
 		this._board = this._board.map(square => {
 			if (square.x == x && square.y == y){
-				return {x, y, isTaken, classList};
+				return {x, y, isTaken, classList, isShooted};
 			}
 			return square;
 		});
