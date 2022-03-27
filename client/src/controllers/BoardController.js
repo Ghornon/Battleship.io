@@ -1,8 +1,9 @@
 class BoardController {
-	constructor(model, view, isPlayerGrid = true) {
+	constructor(model, view, isPlayerGrid = true, gameController) {
 		this._model = model;
 		this._view = view;
 		this._isPlayerGrid = isPlayerGrid;
+		this._gameController = gameController;
 
 		if (this._isPlayerGrid)
 			this._view.on('droppedOnBoard', event => this.droppedOnBoard(event));
@@ -138,6 +139,9 @@ class BoardController {
 	}
 
 	clickedOnSquare(event) {
+		if (!this._gameController.isPlayerTurn())
+			return;
+
 		const isShooted = event.target.dataset.isShooted;
 
 		if (!isShooted)
@@ -155,9 +159,9 @@ class BoardController {
 		else
 			classList.push('miss');
 
-		console.log(square.isTaken);
-
 		this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: true })
+
+		this._gameController.nextTurn();
 	}
 }
 

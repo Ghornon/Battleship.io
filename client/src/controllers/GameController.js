@@ -6,6 +6,7 @@ class GameController {
 		this._view.on('startButtonClicked', event => this.start(event));
 
 		this._model._shipsModel.on('shipRemoved', () => this.unlockStartButton());
+		this._model.on('nextTurn', event => this.changeStatus(event));
 	}
 
 	unlockStartButton() {
@@ -21,7 +22,29 @@ class GameController {
 		event.preventDefault();
 		console.log('Start game');
 		this._model.setStatusText("Start game");
-		this._model.setInfoText("Your turn!");
+
+		this._model.nextTurn();
+	}
+
+	isPlayerTurn() {
+		if (this._model.getPlayer() == 'player')
+			return true;
+		else 
+			return false;
+	}
+
+	changeStatus() {
+		console.log('Status updated');
+
+		if (this.isPlayerTurn())
+			this._model.setInfoText("Your turn!");
+		else
+			this._model.setInfoText("Enemy turn");
+	}
+
+	nextTurn(event) {
+		console.log('Next turn');
+		this._model.nextTurn();
 	}
 }
 

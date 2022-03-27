@@ -15,7 +15,7 @@ const main = () => {
 
 	// Game
 
-	const gameModel = new GameModel(10, shipsModel, 'player');
+	const gameModel = new GameModel(10, shipsModel);
     const gameView = new GameView(gameModel, {
 		startButton: document.querySelector('#start'),
 		info: document.querySelector('#info'),
@@ -32,7 +32,7 @@ const main = () => {
 		querySelector: document.querySelector('#battlefield--enemy'),
 		isEnemyBoard: true
 	});
-    const computerBoardController = new BoardController(computerBoardModel, computerBoardView, false);
+    const computerBoardController = new BoardController(computerBoardModel, computerBoardView, false, gameController);
 	computerBoardController.setComputerShips();
 
 	// Player
@@ -41,7 +41,7 @@ const main = () => {
     const playerBoardView = new BoardView(playerBoardModel, {
 		querySelector: document.querySelector('#battlefield--player')
 	});
-    const playerBoardController = new BoardController(playerBoardModel, playerBoardView);
+    const playerBoardController = new BoardController(playerBoardModel, playerBoardView, true, gameController);
 	
 }
 

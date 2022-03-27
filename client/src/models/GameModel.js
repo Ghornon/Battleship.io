@@ -1,7 +1,7 @@
 import EventEmitter from "../EventEmitter";
 
 class GameModel extends EventEmitter {
-	constructor(width = 10, shipsModel, player = 'player') {
+	constructor(width = 10, shipsModel, player = null) {
 		super();
 		this._width = width;
 		this._infoText = "";
@@ -39,12 +39,11 @@ class GameModel extends EventEmitter {
 
 	nextTurn() {
 		if (this._player == 'player')
-			this._player == 'enemy';
+			this._player = 'enemy';
+		else
+			this._player = 'player';
 
-		if (this._player == 'enemy')
-			this._player == 'player';
-
-		this.emit('nextTurn', this._player);	
+		this.emit('nextTurn');	
 	}
 
 	unlockStart() {
