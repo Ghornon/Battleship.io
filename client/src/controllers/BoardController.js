@@ -5,11 +5,14 @@ class BoardController {
 		this._isPlayerGrid = isPlayerGrid;
 		this._gameController = gameController;
 
-		if (this._isPlayerGrid)
+		if (this._isPlayerGrid) {
 			this._view.on('droppedOnBoard', event => this.droppedOnBoard(event));
-
-		if (!this._isPlayerGrid)
+			this._gameController._model.on('nextTurn', () => this.useAI());
+		}
+		
+		if (!this._isPlayerGrid){
 			this._view.on('clickedOnSquare', event => this.clickedOnSquare(event));
+		}
 	}
   
 	droppedOnBoard(event) {
@@ -40,7 +43,7 @@ class BoardController {
 			squares.forEach(square => {
 				const classList = square.classList;
 				classList.push('taken', `${shipClassName}-container`);
-				this._model.updateBoard({ x: square.x, y: square.y, isTaken: true, classList });
+				this._model.updateBoard({ x: square.x, y: square.y, isTaken: true, classList, isShooted: false });
 			});
 		}
 
@@ -63,7 +66,7 @@ class BoardController {
 			squares.forEach(square => {
 				const classList = square.classList;
 				classList.push('taken', `${shipClassName}-container`);
-				this._model.updateBoard({ ...square, isTaken: true, classList });
+				this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: false });
 			});
 		}
 
@@ -138,13 +141,49 @@ class BoardController {
 		}
 	}
 
+	useAI() {
+		console.log("AI move");
+
+		if (this._gameController.isPlayerTurn())
+			return;
+
+		const { boardWidth } = this._model;
+		let isDone = false;
+
+		while(!isDone){
+			const x = Math.floor(Math.random() * boardWidth);
+			const y = Math.floor(Math.random() * boardWidth);
+
+			const square = this._model.getBoard().find(square => square.x == x && square.y == y);
+
+			const isShooted = square.isShooted;
+
+			if (!isShooted) {
+				const classList = square.classList;
+
+				if (square.isTaken)
+					classList.push('hit');
+				else
+					classList.push('miss');
+		
+				this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: true });
+
+				this._gameController.nextTurn();
+
+				isDone = true;
+			}
+
+		}
+		
+	}
+
 	clickedOnSquare(event) {
 		if (!this._gameController.isPlayerTurn())
 			return;
 
 		const isShooted = event.target.dataset.isShooted;
 
-		if (!isShooted)
+		if (isShooted == 'true')
 			return;
 
 		const x = parseInt(event.target.dataset.x);
@@ -159,7 +198,7 @@ class BoardController {
 		else
 			classList.push('miss');
 
-		this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: true })
+		this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: true });
 
 		this._gameController.nextTurn();
 	}
