@@ -44,9 +44,9 @@ class GameModel extends EventEmitter {
 		this.emit('nextTurn');
 	}
 
-	unlockStart() {
-		this._startButtonDisabled = false;
-		this.emit('startButtonUnlocked');
+	toggleStartButton() {
+		this._startButtonDisabled = !this._startButtonDisabled;
+		this.emit('toggleStartButton');
 	}
 }
 

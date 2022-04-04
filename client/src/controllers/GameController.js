@@ -2,27 +2,34 @@ class GameController {
 	constructor(model, view) {
 		this._model = model;
 		this._view = view;
-
+		this._availableStartview = false;
 		this._view.on('startButtonClicked', (event) => this.start(event));
 
-		this._model._shipsModel.on('shipRemoved', () => this.unlockStartButton());
+		this._model._shipsModel.on('shipRemoved', () => this.toggleStartButton());
 		this._model.on('nextTurn', (event) => this.changeStatus(event));
 	}
 
-	unlockStartButton() {
+	toggleStartButton() {
 		const shipCount = this._model._shipsModel.getShipsCount();
 
 		if (shipCount != 0) return;
 
-		this._view.unlockStartButton();
+		this._model.toggleStartButton();
+		this._availableStart = true;
 	}
 
 	start(event) {
 		event.preventDefault();
-		console.log('Start game');
-		this._model.setStatusText('Start game');
 
+		if (!this._availableStart) return;
+
+		console.log('Start game');
+
+		this._model.setStatusText('Start game');
 		this._model.nextTurn();
+
+		this._model.toggleStartButton();
+		this._availableStart = false;
 	}
 
 	isPlayerTurn() {

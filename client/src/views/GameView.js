@@ -10,6 +10,8 @@ class GameView extends EventEmitter {
 		this._model.on('infoTextSet', () => this.updateInfo());
 		this._model.on('statusTextSet', () => this.updateStats());
 		this._model.on('buttonUnlocked', () => this.unlockStartButton());
+		this._model.on('toggleStartButton', () => this.toggleStartButton());
+
 		this._elements.startButton.addEventListener('click', (event) =>
 			this.emit('startButtonClicked', event)
 		);
@@ -23,9 +25,9 @@ class GameView extends EventEmitter {
 		this._elements.status.innerText = this._model.getStatusText();
 	}
 
-	unlockStartButton() {
-		this._elements.startButton.classList.remove('button--disabled');
-		this._elements.startButton.disabled = this._model.startButton;
+	toggleStartButton() {
+		this._elements.startButton.classList.toggle('button--disabled');
+		this._elements.startButton.disabled = this._model._startButtonDisabled;
 	}
 }
 
