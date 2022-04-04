@@ -147,35 +147,48 @@ class BoardController {
 		}
 	}
 
-	useAI() {
+	_sleep(ms) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
+	async useAI() {
 		console.log('AI move');
 
 		if (this._gameController.isPlayerTurn()) return;
 
 		const { boardWidth } = this._model;
-		let isDone = false;
 
-		while (!isDone) {
-			const x = Math.floor(Math.random() * boardWidth);
-			const y = Math.floor(Math.random() * boardWidth);
+		this._sleep(300).then(() => {
+			let isDone = false;
+			while (!isDone) {
+				const x = Math.floor(Math.random() * boardWidth);
+				const y = Math.floor(Math.random() * boardWidth);
 
-			const square = this._model.getBoard().find((square) => square.x == x && square.y == y);
+				const square = this._model
+					.getBoard()
+					.find((square) => square.x == x && square.y == y);
 
-			const isShooted = square.isShooted;
+				const isShooted = square.isShooted;
 
-			if (!isShooted) {
-				const classList = square.classList;
+				if (!isShooted) {
+					const classList = square.classList;
 
-				if (square.isTaken) classList.push('hit');
-				else classList.push('miss');
+					if (square.isTaken) classList.push('hit');
+					else classList.push('miss');
 
-				this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: true });
+					this._model.updateBoard({
+						...square,
+						isTaken: true,
+						classList,
+						isShooted: true,
+					});
 
-				this._gameController.nextTurn();
+					this._gameController.nextTurn();
 
-				isDone = true;
+					isDone = true;
+				}
 			}
-		}
+		});
 	}
 
 	clickedOnSquare(event) {
