@@ -1,11 +1,11 @@
-import EventEmitter from "../EventEmitter";
+import EventEmitter from '../EventEmitter';
 
 class GameModel extends EventEmitter {
 	constructor(width = 10, shipsModel, player = null) {
 		super();
 		this._width = width;
-		this._infoText = "";
-		this._statusText = "";
+		this._infoText = '';
+		this._statusText = '';
 		this._player = player;
 		this._startButtonDisabled = true;
 		this._shipsModel = shipsModel;
@@ -21,7 +21,7 @@ class GameModel extends EventEmitter {
 
 	setInfoText(text) {
 		this._infoText = text;
-		this.emit('infoTextSet', this._infoText); 
+		this.emit('infoTextSet', this._infoText);
 	}
 
 	getStatusText() {
@@ -30,7 +30,7 @@ class GameModel extends EventEmitter {
 
 	setStatusText(text) {
 		this._statusText = text;
-		this.emit('statusTextSet', this._statusText); 
+		this.emit('statusTextSet', this._statusText);
 	}
 
 	getPlayer() {
@@ -38,12 +38,10 @@ class GameModel extends EventEmitter {
 	}
 
 	nextTurn() {
-		if (this._player == 'player')
-			this._player = 'enemy';
-		else
-			this._player = 'player';
+		if (this._player == 'player') this._player = 'enemy';
+		else this._player = 'player';
 
-		this.emit('nextTurn');	
+		this.emit('nextTurn');
 	}
 
 	unlockStart() {

@@ -2,7 +2,7 @@ class ShipsController {
 	constructor(model, view) {
 		this._model = model;
 		this._view = view;
-		
+
 		this._view.on('rotateShips', (event) => this.rotateShips(event));
 	}
 

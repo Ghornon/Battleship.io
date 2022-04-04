@@ -1,4 +1,4 @@
-import EventEmitter from "../EventEmitter";
+import EventEmitter from '../EventEmitter';
 
 class ShipsView extends EventEmitter {
 	constructor(model, elements) {
@@ -10,7 +10,9 @@ class ShipsView extends EventEmitter {
 		// attach model listeners
 		this._model.on('shipRemoved', () => this.rebuildBoard());
 
-		this._elements.rotateButton.addEventListener('click', event => this.emit('rotateShips', event));
+		this._elements.rotateButton.addEventListener('click', (event) =>
+			this.emit('rotateShips', event)
+		);
 	}
 
 	updateBoardDirection(event) {
@@ -19,7 +21,9 @@ class ShipsView extends EventEmitter {
 	}
 
 	addEventListeners(element) {
-		element.addEventListener('mousedown', event => this._model.setSelectedShip(event.target.id));
+		element.addEventListener('mousedown', (event) =>
+			this._model.setSelectedShip(event.target.id)
+		);
 	}
 
 	rebuildBoard() {
@@ -27,7 +31,7 @@ class ShipsView extends EventEmitter {
 		const grid = this._elements.querySelector;
 		grid.innerHTML = '';
 
-		shipArray.forEach(ship => {
+		shipArray.forEach((ship) => {
 			const div = document.createElement('div');
 			div.classList.add('ship', `${ship.name}-container`);
 			div.draggable = true;

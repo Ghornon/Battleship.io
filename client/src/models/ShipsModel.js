@@ -1,11 +1,11 @@
-import EventEmitter from "../EventEmitter";
+import EventEmitter from '../EventEmitter';
 
 class Ship {
 	constructor(name, length) {
 		this.name = name;
 		this.length = length;
 	}
-}	
+}
 
 class ShipsModel extends EventEmitter {
 	constructor() {
@@ -21,7 +21,7 @@ class ShipsModel extends EventEmitter {
 		this._shipsArray.push(new Ship('destroyer', 2));
 	}
 
-	rotateShips(){
+	rotateShips() {
 		this._isHorizontal = !this._isHorizontal;
 		this.emit('shipsRotated');
 	}
@@ -44,7 +44,7 @@ class ShipsModel extends EventEmitter {
 	}
 
 	getShip(name) {
-		return this._shipsArray.find(ship => ship.name == name);
+		return this._shipsArray.find((ship) => ship.name == name);
 	}
 
 	getShipsCount() {
@@ -52,7 +52,7 @@ class ShipsModel extends EventEmitter {
 	}
 
 	removeShip(name) {
-		this._shipsArray = this._shipsArray.filter(ship => ship.name != name);
+		this._shipsArray = this._shipsArray.filter((ship) => ship.name != name);
 		this.emit('shipRemoved');
 	}
 }
