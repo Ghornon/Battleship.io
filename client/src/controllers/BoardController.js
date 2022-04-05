@@ -173,8 +173,16 @@ class BoardController {
 				if (!isShooted) {
 					const classList = square.classList;
 
-					if (square.isTaken) classList.push('hit');
-					else classList.push('miss');
+					if (square.isTaken) {
+						classList.push('hit');
+						this._gameController.changeInfo('Your ship has been hit!');
+						this._gameController.updateScore(
+							'enemy',
+							square.classList[1].split('-')[0]
+						);
+					} else {
+						classList.push('mis');
+					}
 
 					this._model.updateBoard({
 						...square,
@@ -205,8 +213,14 @@ class BoardController {
 
 		const classList = square.classList;
 
-		if (square.isTaken) classList.push('hit');
-		else classList.push('miss');
+		if (square.isTaken) {
+			classList.push('hit');
+			this._gameController.changeInfo('Enemy target has been hit!');
+			this._gameController.updateScore('player', square.classList[1].split('-')[0]);
+		} else {
+			classList.push('mis');
+			this._gameController.changeInfo('Mishit');
+		}
 
 		this._model.updateBoard({ ...square, isTaken: true, classList, isShooted: true });
 

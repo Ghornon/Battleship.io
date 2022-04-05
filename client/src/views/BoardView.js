@@ -32,7 +32,7 @@ class BoardView extends EventEmitter {
 			square.dataset.isShooted = isShooted;
 
 			const filteredClassList = classList.filter(
-				(className) => className == 'miss' || className == 'hit'
+				(className) => className == 'mis' || className == 'hit'
 			);
 
 			if (classList.length)

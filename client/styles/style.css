@@ -164,11 +164,11 @@ body {
 	background-color: yellow;
 }
 
-.miss {
+.mis {
 	position: relative;
 }
 
-.miss::before {
+.mis::before {
 	content: '';
 	position: absolute;
 	top: 50%;

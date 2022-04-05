@@ -9,6 +9,11 @@ class GameModel extends EventEmitter {
 		this._player = player;
 		this._startButtonDisabled = true;
 		this._shipsModel = shipsModel;
+
+		const shipsScore = this._shipsModel.getShipsArray();
+
+		this._playerScore = shipsScore;
+		this._enemyScore = shipsScore;
 	}
 
 	getWidth() {
@@ -47,6 +52,30 @@ class GameModel extends EventEmitter {
 	toggleStartButton() {
 		this._startButtonDisabled = !this._startButtonDisabled;
 		this.emit('toggleStartButton');
+	}
+
+	updateScore(player, target) {
+		let score = [];
+		if (player == 'player') score = this._playerScore;
+		else score = this._enemyScore;
+
+		const newScore = score.map(({ name, length }) => {
+			console.log(name == target, name, target, length);
+			if (name == target) {
+				if (length - 1 <= 0) {
+					console.log('shipDestroyed', { player, target });
+					this.emit('shipDestroyed', { player, target });
+				}
+				return { name, length: length - 1 };
+			}
+
+			return { name, length };
+		});
+
+		if (player == 'player') this._playerScore = newScore;
+		else this._enemyScore = newScore;
+
+		this.emit('scoreUpdated');
 	}
 }
 
